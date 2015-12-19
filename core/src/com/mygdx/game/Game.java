@@ -39,5 +39,10 @@ public class Game extends ApplicationAdapter {
 		
 		StateManager.renderStates(camera);
 		StateManager.updateStates(camera);
+		
+	}
+	
+	public void dispose() {
+		StateManager.onClose();
 	}
 }

@@ -9,11 +9,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
-import com.mygdx.game.entity.PHSXfun;
+import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.states.State;
 
 public class Play extends State{
@@ -37,7 +38,9 @@ public class Play extends State{
 		batch = new SpriteBatch();
 		sprite = new Sprite(new Texture("res/download.png"));
 		
-		
+		GameObject floor = new GameObject(BodyType.StaticBody,world,Gdx.graphics.getWidth()/Game.scale,1);
+		floor.addBodyDef(0, 0, Gdx.graphics.getWidth()/Game.scale,0, 4, 4, 0);
+		//floor.setY(25);
 		
 
 	}
@@ -46,7 +49,8 @@ public class Play extends State{
 	public void render(Camera camera) {
 		camera.update();
 		if(Gdx.input.isButtonPressed(0)) {
-			PHSXfun en = new PHSXfun(world);
+			GameObject en = new GameObject(new Sprite(new Texture("res/download.png")),BodyType.DynamicBody, world, 5/Game.scale,32/Game.scale);
+			en.addBodyDef(0, 0,5/Game.scale, 5/Game.scale, 4, 0, 100);
 			en.setX(Gdx.input.getX()/Game.scale);
 			en.setY((Gdx.graphics.getHeight() - Gdx.input.getY())/Game.scale);
 			entities.add(en);

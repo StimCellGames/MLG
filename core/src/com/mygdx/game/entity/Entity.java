@@ -32,12 +32,13 @@ public abstract class Entity {
 
 	}
 
-	public void addBodyDef(float x,float y,float width, float height,float density,float friction,float restition,boolean collision) {
+	public void addBodyDef(float x,float y,float width, float height,float density,float friction,float restition) {
 		if(body==null) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			body = world.createBody(def);
-
+			body.getPosition().x = -width;
+			body.getPosition().y = -height;
 		}
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width,height);
@@ -45,16 +46,17 @@ public abstract class Entity {
 		circleFixture.density = density;
 		circleFixture.friction = friction;
 		circleFixture.restitution = restition;
-		if(!collision)circleFixture.filter.maskBits = 0;
 		body.createFixture(circleFixture);
 
 	}
 
-	public void addBodyDef(float x,float y,float radius,float density,float friction,float restition,boolean collision) {
+	public void addBodyDef(float x,float y,float radius,float density,float friction,float restition) {
 		if(body==null) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			body = world.createBody(def);
+			body.getPosition().x = -radius;
+			body.getPosition().y = -radius;
 		}
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
@@ -65,7 +67,7 @@ public abstract class Entity {
 		circleFixture.density = density;
 		circleFixture.friction = friction;
 		circleFixture.restitution = restition;
-		if(!collision)circleFixture.filter.maskBits = 0;
+		
 
 		body.createFixture(circleFixture);
 
