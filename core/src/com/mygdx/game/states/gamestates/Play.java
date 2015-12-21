@@ -16,6 +16,7 @@ import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
 import com.mygdx.game.states.State;
+import com.mygdx.game.tiles.Tile;
 
 public class Play extends State{
 	private Sprite sprite;
@@ -25,16 +26,14 @@ public class Play extends State{
 	private Box2DDebugRenderer renderer;
 	
 	private FPSLogger logger;
-	
-	
+	Tile tile;
 	public Play() {
 		renderer = new Box2DDebugRenderer();
 		logger = new FPSLogger();
 
-		world = new World(new Vector2(5, -9.8f * 15), false);
+		world = new World(new Vector2(0, -9.8f * 15), false);
 		
-		
-
+		Tile.initTiles(world);
 		batch = new SpriteBatch();
 		sprite = new Sprite(new Texture("res/download.png"));
 		
@@ -42,6 +41,7 @@ public class Play extends State{
 		floor.addBodyDef(0, 0, Gdx.graphics.getWidth()/Game.scale,0, 4, 4, 0);
 		//floor.setY(25);
 		
+		tile = new Tile(world,Tile.DIRT_TILE);
 
 	}
 	
@@ -49,8 +49,8 @@ public class Play extends State{
 	public void render(Camera camera) {
 		camera.update();
 		if(Gdx.input.isButtonPressed(0)) {
-			GameObject en = new GameObject(new Sprite(new Texture("res/download.png")),BodyType.DynamicBody, world, 5/Game.scale,32/Game.scale);
-			en.addBodyDef(0, 0,5/Game.scale, 5/Game.scale, 4, 0, 100);
+			GameObject en = new GameObject(BodyType.DynamicBody, world, 1/Game.scale,1/Game.scale);
+			en.addBodyDef(0, 0,1/Game.scale, 1/Game.scale, 4, 100, 0);
 			en.setX(Gdx.input.getX()/Game.scale);
 			en.setY((Gdx.graphics.getHeight() - Gdx.input.getY())/Game.scale);
 			entities.add(en);
@@ -64,6 +64,10 @@ public class Play extends State{
 
 	batch.setProjectionMatrix(camera.combined);
 		batch.begin();
+		tile.setX(100);
+		tile.setY(100);
+
+		tile.render(camera, batch);
 		for(Entity e : entities) {
 			e.render(camera, batch);
 		}

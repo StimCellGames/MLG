@@ -31,6 +31,24 @@ public abstract class Entity {
 		this.world = world;
 
 	}
+	
+	public void addBodyDef(float[] vertices,float density,float friction,float restition) {
+		if(body==null) {
+			BodyDef def = new BodyDef();
+			def.type = type;
+			body = world.createBody(def);
+			body.getPosition().x = -width;
+			body.getPosition().y = -height;
+		}
+		PolygonShape shape = new PolygonShape();
+		shape.set(vertices);
+		circleFixture.shape = shape;
+		circleFixture.density = density;
+		circleFixture.friction = friction;
+		circleFixture.restitution = restition;
+		body.createFixture(circleFixture);
+
+	}
 
 	public void addBodyDef(float x,float y,float width, float height,float density,float friction,float restition) {
 		if(body==null) {
