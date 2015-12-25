@@ -2,7 +2,7 @@ package com.mygdx.game.tiles;
 
 import java.util.Arrays;
 
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -57,7 +57,7 @@ public class Tile extends Entity{
 				tileSheet = new Sprite(new Texture(tiles[i].path));
 				tileSheet.setRegion(tiles[i].getxCrop(),tiles[i].getyCrop(),16,16);
 				tiles[i].setSprite(tileSheet);
-				//tiles[i].delete();
+				tiles[i].deleteBody(world);
 
 			}
 		
@@ -66,7 +66,7 @@ public class Tile extends Entity{
 	}
 
 	
-	public void render(Camera camera, SpriteBatch batch) {
+	public void render(OrthographicCamera camera, SpriteBatch batch) {
 		if(sprite!=null && toRender==true && ID!=VOID_TILE) {
 				sprite.setPosition(x- sprite.getWidth()/2,y- sprite.getWidth()/2);
 				sprite.setSize(TILE_SIZE,TILE_SIZE);
@@ -77,7 +77,7 @@ public class Tile extends Entity{
 	}
 
 	
-	public void update(Camera camera) {
+	public void update(OrthographicCamera camera) {
 		
 	}
 	
@@ -152,9 +152,8 @@ public class Tile extends Entity{
 	}
 	
 	public void delete() {
-		//body.setActive(false);
+		body.setActive(false);
 		flaggedForDelete = true;
-		//setID(VOID_TILE);
 	}
 	public void deleteBody(World world) {
 		if(on && body!=null) {

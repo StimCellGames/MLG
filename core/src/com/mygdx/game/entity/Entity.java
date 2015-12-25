@@ -2,7 +2,7 @@ package com.mygdx.game.entity;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -95,8 +95,8 @@ public abstract class Entity {
 
 
 
-	public abstract void render(Camera camera,SpriteBatch batch);
-	public abstract void update(Camera camera);
+	public abstract void render(OrthographicCamera camera,SpriteBatch batch);
+	public abstract void update(OrthographicCamera camera);
 
 
 

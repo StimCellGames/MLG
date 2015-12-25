@@ -1,6 +1,7 @@
 package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -18,7 +19,7 @@ public class GameObject extends Entity{
 		this.sprite = sprite;
 	}
 
-	public void render(Camera camera, SpriteBatch batch) {
+	public void render(OrthographicCamera camera, SpriteBatch batch) {
 		if(body!=null && sprite!=null) {
 			sprite.setPosition(body.getPosition().x- sprite.getWidth()/2, body.getPosition().y- sprite.getHeight()/2);
 			sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
@@ -28,7 +29,7 @@ public class GameObject extends Entity{
 		}
 	}
 
-	public void update(Camera camera) {
+	public void update(OrthographicCamera camera) {
 
 	}
 
