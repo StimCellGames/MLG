@@ -6,13 +6,14 @@ import com.mygdx.game.Game;
 
 public class DesktopLauncher {
 	private static boolean FPSCap = true;
-	public static void main (String[] arg) {
+
+	public static void main(String[] arg) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.vSyncEnabled = false;
 		cfg.title = "Game";
-		cfg.width=1280;
-		cfg.height=720;
-		if(!FPSCap) {
+		cfg.width = 1280;
+		cfg.height = 720;
+		if (!FPSCap) {
 			cfg.vSyncEnabled = false;
 			cfg.foregroundFPS = 0;
 			cfg.backgroundFPS = 0;

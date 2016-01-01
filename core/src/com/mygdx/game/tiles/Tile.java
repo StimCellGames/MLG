@@ -11,82 +11,78 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
 
-public class Tile extends Entity{
-	public static final float TILE_SIZE = (int) (16/Game.scale);
+public class Tile extends Entity {
+	public static final float TILE_SIZE = (int) (16 / Game.scale);
 
 	private int ID;
 	private static boolean isClone = false;
 
-	public static final int VOID_TILE = 0, ROCK_TILE = 1,DIRT_TILE = 2,FLOWER_TILE = 3;
+	public static final int VOID_TILE = 0, ROCK_TILE = 1, DIRT_TILE = 2, FLOWER_TILE = 3;
 
 	public static Tile empty;
 	public static Tile rock;
 	public static Tile flower;
 	public static Tile dirt;
 
-	public static Tile[] tiles; 
+	public static Tile[] tiles;
 
 	public static final int SOLID = 0, BREAKABLE = 1;
-	private boolean[] attribs = {false, false};
+	private boolean[] attribs = { false, false };
 
 	private boolean toRender = false;
 
-	private int xCrop,yCrop;
+	private int xCrop, yCrop;
 	public String path;
 	private static Sprite tileSheet;
 
-	
 	public Tile(World world, int ID) {
-		super(BodyType.StaticBody, world, TILE_SIZE/2, TILE_SIZE/2);
+		super(BodyType.StaticBody, world, TILE_SIZE / 2, TILE_SIZE / 2);
 		this.ID = ID;
-		setID(ID,true);
-		
+		setID(ID, true);
+
 	}
-	
+
 	public static void initTiles(World world) {
-		empty = new Tile(world,VOID_TILE);
-		dirt = new Tile(world,DIRT_TILE);
-		rock = new Tile(world,ROCK_TILE);
-		flower = new Tile(world,FLOWER_TILE);
-		
+		empty = new Tile(world, VOID_TILE);
+		dirt = new Tile(world, DIRT_TILE);
+		rock = new Tile(world, ROCK_TILE);
+		flower = new Tile(world, FLOWER_TILE);
 
-		tiles = new Tile[] {empty,rock,dirt,flower};
-			for(int i = 0;i < tiles.length;i++) {
-				tileSheet = new Sprite(new Texture(tiles[i].path));
-				tileSheet.setRegion(tiles[i].getxCrop(),tiles[i].getyCrop(),16,16);
-				tiles[i].setSprite(tileSheet);
-				tiles[i].deleteBody(world);
+		tiles = new Tile[] { empty, rock, dirt, flower };
+		for (int i = 0; i < tiles.length; i++) {
+			tileSheet = new Sprite(new Texture(tiles[i].path));
+			tileSheet.setRegion(tiles[i].getxCrop(), tiles[i].getyCrop(), 16, 16);
+			tiles[i].setSprite(tileSheet);
+			tiles[i].deleteBody(world);
 
-			}
-		
+		}
+
 		isClone = true;
 
 	}
 
-	
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
-		if(sprite!=null && toRender==true && ID!=VOID_TILE) {
-				sprite.setPosition(x- sprite.getWidth()/2,y- sprite.getWidth()/2);
-				sprite.setSize(TILE_SIZE,TILE_SIZE);
-				sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-				sprite.draw(batch);
-			
+		if (sprite != null && toRender == true && ID != VOID_TILE) {
+			sprite.setPosition(x - sprite.getWidth() / 2, y - sprite.getWidth() / 2);
+			sprite.setSize(TILE_SIZE, TILE_SIZE);
+			sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+			sprite.draw(batch);
+
 		}
 	}
 
-	
 	public void update(OrthographicCamera camera) {
-		
+
 	}
-	
-	private void setID(int iD,boolean createBody) {
+
+	private void setID(int iD, boolean createBody) {
 		this.ID = iD;
 		flaggedForDelete = false;
 
 		Arrays.fill(attribs, false);
 		toRender = false;
 
-		if(ID == VOID_TILE) {
+		if (ID == VOID_TILE) {
 			toRender = false;
 			width = height = 32;
 
@@ -94,7 +90,7 @@ public class Tile extends Entity{
 
 		}
 
-		if(ID == ROCK_TILE) {
+		if (ID == ROCK_TILE) {
 
 			toRender = true;
 			attribs[SOLID] = true;
@@ -107,7 +103,7 @@ public class Tile extends Entity{
 			path = ("res/Textures/Spritesheet.png");
 		}
 
-		if(ID == DIRT_TILE) {
+		if (ID == DIRT_TILE) {
 
 			toRender = true;
 			attribs[SOLID] = true;
@@ -119,24 +115,25 @@ public class Tile extends Entity{
 			path = ("res/Textures/Spritesheet.png");
 		}
 
-		if(ID == FLOWER_TILE) {
+		if (ID == FLOWER_TILE) {
 			toRender = true;
 
 			xCrop = 16;
 			yCrop = 0;
-			width = height = 16;	
+			width = height = 16;
 
 			path = ("res/Textures/Spritesheet.png");
 
 		}
-		if(attribs[SOLID] && createBody)addBodyDef(0,0,TILE_SIZE/2, TILE_SIZE/2, 0,0,0);
+		if (attribs[SOLID] && createBody)
+			addBodyDef(0, 0, TILE_SIZE / 2, TILE_SIZE / 2, 0, 0, 0);
 
-		if(isClone){
+		if (isClone) {
 			setSprite(tiles[ID].getSprite());
-			sprite.setRegion(xCrop, yCrop, 16,16);
+			sprite.setRegion(xCrop, yCrop, 16, 16);
 		}
 	}
-	
+
 	public int getID() {
 		return ID;
 	}
@@ -148,7 +145,5 @@ public class Tile extends Entity{
 	public int getyCrop() {
 		return yCrop;
 	}
-	
-	
-	
+
 }

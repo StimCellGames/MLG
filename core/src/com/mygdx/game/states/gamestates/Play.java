@@ -73,13 +73,6 @@ public class Play extends State{
 
 		}
 
-		
-
-
-
-
-
-
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		

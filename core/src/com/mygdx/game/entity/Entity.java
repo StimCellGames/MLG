@@ -20,12 +20,13 @@ public abstract class Entity {
 	protected Body body;
 	protected float width, height;
 	protected float x, y;
-	protected ArrayList<Entity>bodies = new ArrayList<Entity>();
+	protected ArrayList<Entity> bodies = new ArrayList<Entity>();
 
 	private World world;
 	protected FixtureDef circleFixture = new FixtureDef();
 	public boolean flaggedForDelete = false;
-	public Entity(BodyType type, World world,float width,float height) {
+
+	public Entity(BodyType type, World world, float width, float height) {
 		this.width = width;
 		this.height = height;
 		this.type = type;
@@ -33,8 +34,8 @@ public abstract class Entity {
 
 	}
 
-	public void addBodyDef(float[] vertices,float density,float friction,float restition) {
-		if(body==null) {
+	public void addBodyDef(float[] vertices, float density, float friction, float restition) {
+		if (body == null) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			body = world.createBody(def);
@@ -51,9 +52,10 @@ public abstract class Entity {
 
 	}
 
-	public void addBodyDef(float x,float y,float width, float height,float density,float friction,float restition) {
-		if(width > 0 && height > 0) {
-			if(body==null) {
+	public void addBodyDef(float x, float y, float width, float height, float density, float friction,
+			float restition) {
+		if (width > 0 && height > 0) {
+			if (body == null) {
 				BodyDef def = new BodyDef();
 				def.type = type;
 				body = world.createBody(def);
@@ -61,12 +63,8 @@ public abstract class Entity {
 				body.getPosition().y = -height;
 			}
 			PolygonShape shape = new PolygonShape();
-			shape.set(new float[]{
-					x-width,y-height,
-					width*2+x-width,y-height,
-					width*2+x-width,height*2+y-height,
-					x-width,height*2+y-height
-			});
+			shape.set(new float[] { x - width, y - height, width * 2 + x - width, y - height, width * 2 + x - width,
+					height * 2 + y - height, x - width, height * 2 + y - height });
 			circleFixture.shape = shape;
 			circleFixture.density = density;
 			circleFixture.friction = friction;
@@ -76,8 +74,8 @@ public abstract class Entity {
 
 	}
 
-	public void addBodyDef(float x,float y,float radius,float density,float friction,float restition) {
-		if(body==null) {
+	public void addBodyDef(float x, float y, float radius, float density, float friction, float restition) {
+		if (body == null) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			body = world.createBody(def);
@@ -87,26 +85,20 @@ public abstract class Entity {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 
-		shape.setPosition(new Vector2(x,y));
+		shape.setPosition(new Vector2(x, y));
 
 		circleFixture.shape = shape;
 		circleFixture.density = density;
 		circleFixture.friction = friction;
 		circleFixture.restitution = restition;
 
-
 		body.createFixture(circleFixture);
 
 	}
 
+	public abstract void render(OrthographicCamera camera, SpriteBatch batch);
 
-
-
-
-	public abstract void render(OrthographicCamera camera,SpriteBatch batch);
 	public abstract void update(OrthographicCamera camera);
-
-
 
 	public void delete() {
 		body.setActive(false);
@@ -114,24 +106,23 @@ public abstract class Entity {
 	}
 
 	private boolean on = true;
+
 	public void deleteBody(World world) {
-		if(on && body!=null) {
+		if (on && body != null) {
 			world.destroyBody(body);
-			on=false;
+			on = false;
 		}
 
 	}
 
 	public void setActive(boolean a) {
-		if(body!=null)body.setActive(a);
+		if (body != null)
+			body.setActive(a);
 	}
-
 
 	public Sprite getSprite() {
 		return sprite;
 	}
-
-
 
 	public float getHeight() {
 		return height;
@@ -149,13 +140,13 @@ public abstract class Entity {
 		this.width = width;
 	}
 
-
 	public float getX() {
 		return x;
 	}
 
 	public void setX(float x) {
-		if(body!=null)body.setTransform(x,y,0);
+		if (body != null)
+			body.setTransform(x, y, 0);
 		this.x = x;
 	}
 
@@ -164,7 +155,8 @@ public abstract class Entity {
 	}
 
 	public void setY(float y) {
-		if(body!=null)body.setTransform(x,y,0);
+		if (body != null)
+			body.setTransform(x, y, 0);
 		this.y = y;
 	}
 
@@ -172,6 +164,5 @@ public abstract class Entity {
 		this.sprite = sprite;
 
 	}
-
 
 }
