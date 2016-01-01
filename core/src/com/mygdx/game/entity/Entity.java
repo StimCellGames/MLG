@@ -24,6 +24,7 @@ public abstract class Entity {
 
 	private World world;
 	protected FixtureDef circleFixture = new FixtureDef();
+	public boolean flaggedForDelete = false;
 	public Entity(BodyType type, World world,float width,float height) {
 		this.width = width;
 		this.height = height;
@@ -31,7 +32,7 @@ public abstract class Entity {
 		this.world = world;
 
 	}
-	
+
 	public void addBodyDef(float[] vertices,float density,float friction,float restition) {
 		if(body==null) {
 			BodyDef def = new BodyDef();
@@ -51,20 +52,27 @@ public abstract class Entity {
 	}
 
 	public void addBodyDef(float x,float y,float width, float height,float density,float friction,float restition) {
-		if(body==null) {
-			BodyDef def = new BodyDef();
-			def.type = type;
-			body = world.createBody(def);
-			body.getPosition().x = -width;
-			body.getPosition().y = -height;
+		if(width > 0 && height > 0) {
+			if(body==null) {
+				BodyDef def = new BodyDef();
+				def.type = type;
+				body = world.createBody(def);
+				body.getPosition().x = -width;
+				body.getPosition().y = -height;
+			}
+			PolygonShape shape = new PolygonShape();
+			shape.set(new float[]{
+					x-width,y-height,
+					width*2+x-width,y-height,
+					width*2+x-width,height*2+y-height,
+					x-width,height*2+y-height
+			});
+			circleFixture.shape = shape;
+			circleFixture.density = density;
+			circleFixture.friction = friction;
+			circleFixture.restitution = restition;
+			body.createFixture(circleFixture);
 		}
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width,height);
-		circleFixture.shape = shape;
-		circleFixture.density = density;
-		circleFixture.friction = friction;
-		circleFixture.restitution = restition;
-		body.createFixture(circleFixture);
 
 	}
 
@@ -85,7 +93,7 @@ public abstract class Entity {
 		circleFixture.density = density;
 		circleFixture.friction = friction;
 		circleFixture.restitution = restition;
-		
+
 
 		body.createFixture(circleFixture);
 
@@ -99,6 +107,20 @@ public abstract class Entity {
 	public abstract void update(OrthographicCamera camera);
 
 
+
+	public void delete() {
+		body.setActive(false);
+		flaggedForDelete = true;
+	}
+
+	private boolean on = true;
+	public void deleteBody(World world) {
+		if(on && body!=null) {
+			world.destroyBody(body);
+			on=false;
+		}
+
+	}
 
 	public void setActive(boolean a) {
 		if(body!=null)body.setActive(a);

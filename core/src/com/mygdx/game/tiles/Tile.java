@@ -35,8 +35,6 @@ public class Tile extends Entity{
 	public String path;
 	private static Sprite tileSheet;
 
-	public boolean flaggedForDelete = false;
-	boolean on = true;
 	
 	public Tile(World world, int ID) {
 		super(BodyType.StaticBody, world, TILE_SIZE/2, TILE_SIZE/2);
@@ -151,16 +149,6 @@ public class Tile extends Entity{
 		return yCrop;
 	}
 	
-	public void delete() {
-		body.setActive(false);
-		flaggedForDelete = true;
-	}
-	public void deleteBody(World world) {
-		if(on && body!=null) {
-			world.destroyBody(body);
-			on=false;
-		}
 	
-	}
 	
 }
