@@ -143,6 +143,15 @@ public abstract class Entity {
 	public float getX() {
 		return x;
 	}
+	
+	public void setLinearVelocity(float x,float y) {
+		body.setLinearVelocity(x,y);
+		
+	}
+	
+	public void setType(BodyType type) {
+		body.setType(type);
+	}
 
 	public void setX(float x) {
 		if (body != null)

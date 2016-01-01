@@ -22,7 +22,7 @@ import com.mygdx.game.level.Level;
 import com.mygdx.game.states.State;
 import com.mygdx.game.tiles.Tile;
 
-public class Play extends State{
+public class Play extends State {
 	private Sprite sprite;
 	private SpriteBatch batch;
 	public static World world;
@@ -31,17 +31,12 @@ public class Play extends State{
 
 	private FPSLogger logger;
 
-
 	private Level level;
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private Player player;
+	private GameObject explosion;
+
 	public Play() {
-		
-
-
-
-
-
 		renderer = new Box2DDebugRenderer();
 		logger = new FPSLogger();
 
@@ -51,50 +46,47 @@ public class Play extends State{
 		batch = new SpriteBatch();
 		sprite = new Sprite(new Texture("res/download.png"));
 
-		
-
-		
-		level = new Level("res/map.tmx",world);
+		level = new Level("res/map.tmx",batch, world);
 
 		player = new Player(world);
 
+		explosion = new GameObject(sprite, BodyType.DynamicBody, world, 32 / Game.scale, 32 / Game.scale);
+		explosion.addBodyDef(0, 0, 32 / Game.scale, 32 / Game.scale, 4, 0, 0);
+		explosion.setX(700 / Game.scale);
+		explosion.setY(700 / Game.scale);
 	}
 
 	public void render(OrthographicCamera camera) {
 
-		level.render(camera);
 		camera.update();
 		if(Gdx.input.isButtonPressed(0)) {
-			GameObject en = new GameObject(sprite,BodyType.DynamicBody, world, 32/Game.scale,32/Game.scale);
+			/*GameObject en = new GameObject(sprite,BodyType.DynamicBody, world, 32/Game.scale,32/Game.scale);
 			en.addBodyDef(0, 0,32/Game.scale, 32/Game.scale, 4, 0, 0);
 			en.setX(Gdx.input.getX()/Game.scale);
 			en.setY((Gdx.graphics.getHeight() - Gdx.input.getY())/Game.scale);
-			entities.add(en);
+			entities.add(en);*/
+			explosion.setLinearVelocity(-(Gdx.input.getX()/Game.scale - explosion.getX()),((Gdx.graphics.getHeight() - Gdx.input.getY())/Game.scale - explosion.getY()));
 
 		}
 
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		
+		level.render(batch,camera);
+
 		for(Entity e : entities) {
 			e.render(camera, batch);
 		}
-		//sprite.draw(batch);
 		player.render(camera, batch);
 		batch.end();
 
 		renderer.render(world, camera.combined);
 
-
-
-
-		
-		 
 		logger.log();
 
 		world.step(1/60f, 6, 2);
 		
 	}
+
 	public void update(OrthographicCamera camera) {
 		player.update(camera);
 	}
@@ -103,7 +95,6 @@ public class Play extends State{
 		world.dispose();
 		level.dispose();
 		batch.dispose();
-
 	}
 
 	public int getID() {

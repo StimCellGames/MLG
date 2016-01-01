@@ -58,7 +58,6 @@ public class Tile extends Entity {
 		}
 
 		isClone = true;
-
 	}
 
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
