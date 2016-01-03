@@ -32,6 +32,8 @@ public class GameObject extends Entity {
 	}
 
 	public void update(OrthographicCamera camera) {
+		x = body.getPosition().x;
+		y = body.getPosition().y;
 
 	}
 

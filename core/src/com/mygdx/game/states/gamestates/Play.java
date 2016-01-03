@@ -59,13 +59,13 @@ public class Play extends State {
 	public void render(OrthographicCamera camera) {
 
 		camera.update();
-		if(Gdx.input.isButtonPressed(0)) {
-			/*GameObject en = new GameObject(sprite,BodyType.DynamicBody, world, 32/Game.scale,32/Game.scale);
+		if(Gdx.input.isButtonPressed(1)) {
+			GameObject en = new GameObject(sprite,BodyType.DynamicBody, world, 32/Game.scale,32/Game.scale);
 			en.addBodyDef(0, 0,32/Game.scale, 32/Game.scale, 4, 0, 0);
 			en.setX(Gdx.input.getX()/Game.scale);
 			en.setY((Gdx.graphics.getHeight() - Gdx.input.getY())/Game.scale);
-			entities.add(en);*/
-			explosion.setLinearVelocity(-(Gdx.input.getX()/Game.scale - explosion.getX()),((Gdx.graphics.getHeight() - Gdx.input.getY())/Game.scale - explosion.getY()));
+			entities.add(en);
+			
 
 		}
 
@@ -88,7 +88,9 @@ public class Play extends State {
 	}
 
 	public void update(OrthographicCamera camera) {
+		level.update();
 		player.update(camera);
+		explosion.update(camera);
 	}
 
 	public void onClose() {

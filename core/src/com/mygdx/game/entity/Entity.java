@@ -95,10 +95,18 @@ public abstract class Entity {
 		body.createFixture(circleFixture);
 
 	}
+	
+	
 
 	public abstract void render(OrthographicCamera camera, SpriteBatch batch);
 
 	public abstract void update(OrthographicCamera camera);
+
+	
+	
+	public Body getBody() {
+		return body;
+	}
 
 	public void delete() {
 		body.setActive(false);
@@ -146,7 +154,10 @@ public abstract class Entity {
 	
 	public void setLinearVelocity(float x,float y) {
 		body.setLinearVelocity(x,y);
-		
+	}
+	
+	public Vector2 getLinearVelocity() {
+		return body.getLinearVelocity();
 	}
 	
 	public void setType(BodyType type) {

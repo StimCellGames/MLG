@@ -13,14 +13,14 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Solid" width="100" height="100">
-  <data encoding="base64" compression="zlib">
-   eJzt2EsKhDAQBUCvkPtfdjYDM0hHXmL8LKpAFE02ryNp3TYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGte/BO7TdmWepx3u03bWaPKfKf1U9WnFwrJfRTHa97NUic5RT8ixZ+2pRG8nwzJz9XGpJNlXuo5naKzK9jJL80nzVYdz/up9d+9U9dZizIjs97Boj+4Ksr3W0d/TGegfWGOmRqm+3ZByZNN9qzqo+i5/Z/xR62muc7WfTceqSuTMr9chYu8BbfQCN9wjW
-  </data>
- </layer>
  <layer name="stuff" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2EEOwiAQBdB6/0u7MpqGschMUynvJe4EgS8M7bYBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzO0RfLhGa+1lcp1o3eURO/Mc+davTN5GMxipBfKIZfZBq21vX5m2d1RxHkW1eXQcq+ZRVRsq8vhsN/sdeGT8lXPd95Xpd9YMXlpr0ZNN9ZyrzpqZszhydKesPhNW3he9ovcSlbVjX4sztXwV0b0y+5/u/a3M9+6iZy/8Um9GnvfO3Jv/qHq+K60dAEDLE/mzAIw=
+   eJztw4EJAAAIA6D1/9OdsSAFEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmubwjxbNnAAo
+  </data>
+ </layer>
+ <layer name="Solid" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2UEKgzAARUGvkPtftuuCLQZNfIsZ6KarkofET48DAAAAAAAAAAAAAAAAAAAAAAAA+sbbP4Av49CkYJx8eI8eDWcd9NjvXwdN9rraQo89Znpost7MGeuxnh4terTo0aJHix4terTo0TKz//RYz/PRokeLHi2/zvjsez3Wmzl3PdabeYfSYz33R4seLfZgi+ejRY8WPVrswRZ7sMUebHF/tOjR8vQe1Oyep58PPe7Ro8X90WIPttiDLfZgi/ujRY8W/w+2eD5a9GjRo8XWaLHDW7xDtTj/Fj32+wBFRgvk
   </data>
  </layer>
 </map>
