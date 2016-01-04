@@ -2,7 +2,7 @@ package com.mygdx.game.entity;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,11 +20,13 @@ public abstract class Entity {
 	protected Body body;
 	protected float width, height;
 	protected float x, y;
-	protected ArrayList<Entity>bodies = new ArrayList<Entity>();
+	protected ArrayList<Entity> bodies = new ArrayList<Entity>();
 
 	private World world;
 	protected FixtureDef circleFixture = new FixtureDef();
-	public Entity(BodyType type, World world,float width,float height) {
+	public boolean flaggedForDelete = false;
+
+	public Entity(BodyType type, World world, float width, float height) {
 		this.width = width;
 		this.height = height;
 		this.type = type;
@@ -32,8 +34,8 @@ public abstract class Entity {
 
 	}
 
-	public void addBodyDef(float x,float y,float width, float height,float density,float friction,float restition) {
-		if(body==null) {
+	public void addBodyDef(float[] vertices, float density, float friction, float restition) {
+		if (body == null) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			body = world.createBody(def);
@@ -41,7 +43,7 @@ public abstract class Entity {
 			body.getPosition().y = -height;
 		}
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width,height);
+		shape.set(vertices);
 		circleFixture.shape = shape;
 		circleFixture.density = density;
 		circleFixture.friction = friction;
@@ -50,8 +52,30 @@ public abstract class Entity {
 
 	}
 
-	public void addBodyDef(float x,float y,float radius,float density,float friction,float restition) {
-		if(body==null) {
+	public void addBodyDef(float x, float y, float width, float height, float density, float friction,
+			float restition) {
+		if (width > 0 && height > 0) {
+			if (body == null) {
+				BodyDef def = new BodyDef();
+				def.type = type;
+				body = world.createBody(def);
+				body.getPosition().x = -width;
+				body.getPosition().y = -height;
+			}
+			PolygonShape shape = new PolygonShape();
+			shape.set(new float[] { x - width, y - height, width * 2 + x - width, y - height, width * 2 + x - width,
+					height * 2 + y - height, x - width, height * 2 + y - height });
+			circleFixture.shape = shape;
+			circleFixture.density = density;
+			circleFixture.friction = friction;
+			circleFixture.restitution = restition;
+			body.createFixture(circleFixture);
+		}
+
+	}
+
+	public void addBodyDef(float x, float y, float radius, float density, float friction, float restition) {
+		if (body == null) {
 			BodyDef def = new BodyDef();
 			def.type = type;
 			body = world.createBody(def);
@@ -61,37 +85,52 @@ public abstract class Entity {
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 
-		shape.setPosition(new Vector2(x,y));
+		shape.setPosition(new Vector2(x, y));
 
 		circleFixture.shape = shape;
 		circleFixture.density = density;
 		circleFixture.friction = friction;
 		circleFixture.restitution = restition;
-		
 
 		body.createFixture(circleFixture);
 
 	}
+	
+	
 
+	public abstract void render(OrthographicCamera camera, SpriteBatch batch);
 
+	public abstract void update(OrthographicCamera camera);
 
-
-
-	public abstract void render(Camera camera,SpriteBatch batch);
-	public abstract void update(Camera camera);
-
-
-
-	public void setActive(boolean a) {
-		if(body!=null)body.setActive(a);
+	
+	
+	public Body getBody() {
+		return body;
 	}
 
+	public void delete() {
+		body.setActive(false);
+		flaggedForDelete = true;
+	}
+
+	private boolean on = true;
+
+	public void deleteBody(World world) {
+		if (on && body != null) {
+			world.destroyBody(body);
+			on = false;
+		}
+
+	}
+
+	public void setActive(boolean a) {
+		if (body != null)
+			body.setActive(a);
+	}
 
 	public Sprite getSprite() {
 		return sprite;
 	}
-
-
 
 	public float getHeight() {
 		return height;
@@ -109,13 +148,25 @@ public abstract class Entity {
 		this.width = width;
 	}
 
-
 	public float getX() {
 		return x;
 	}
+	
+	public void setLinearVelocity(float x,float y) {
+		body.setLinearVelocity(x,y);
+	}
+	
+	public Vector2 getLinearVelocity() {
+		return body.getLinearVelocity();
+	}
+	
+	public void setType(BodyType type) {
+		body.setType(type);
+	}
 
 	public void setX(float x) {
-		if(body!=null)body.setTransform(x,y,0);
+		if (body != null)
+			body.setTransform(x, y, 0);
 		this.x = x;
 	}
 
@@ -124,7 +175,8 @@ public abstract class Entity {
 	}
 
 	public void setY(float y) {
-		if(body!=null)body.setTransform(x,y,0);
+		if (body != null)
+			body.setTransform(x, y, 0);
 		this.y = y;
 	}
 
@@ -132,6 +184,5 @@ public abstract class Entity {
 		this.sprite = sprite;
 
 	}
-
 
 }
