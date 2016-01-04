@@ -34,11 +34,11 @@ public class Player extends Entity {
 	}
 
 	public void update(OrthographicCamera camera) {
-		body.setLinearVelocity(0, body.getLinearVelocity().y);
+		//body.setLinearVelocity(0, body.getLinearVelocity().y);
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 			body.setLinearVelocity(50, body.getLinearVelocity().y);
-		}
+		} else 
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			body.setLinearVelocity(-50, body.getLinearVelocity().y);
 		}

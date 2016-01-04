@@ -83,26 +83,16 @@ public class Level {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(camera, batch);
 		}
-		if (Gdx.input.isButtonPressed(2)) {
+		
+	}
+	public void update() {
+		
+		
+		if (Gdx.input.isButtonPressed(0)) {
 			for (int i = 0; i < entities.size(); i++) {
 				entities.get(i).setType(BodyType.DynamicBody);
 			}
-		}
-	}
-	private Vector2[] vectors;
-	public void update() {
-		if(vectors!=null) {
-			for(int i = 0;i < vectors.length/2;i+=1) {
-				sr.begin(ShapeType.Line);
-				sr.line(new Vector2(vectors[i].x*Game.scale,vectors[i].y*Game.scale), new Vector2(vectors[i+1].x*Game.scale,vectors[i+1].y*Game.scale));
-				sr.end();
-			}
-			
-		}
-		
-		if (Gdx.input.isButtonPressed(0)) {
-			vectors=Physics.explosion(world, Gdx.input.getX()/Game.scale, (Gdx.graphics.getHeight()- Gdx.input.getY())/Game.scale);
-			System.out.println(vectors[0] + " " + Gdx.input.getX() + "," + Gdx.input.getY());
+			Physics.explosion(world, Gdx.input.getX()/Game.scale, (Gdx.graphics.getHeight()- Gdx.input.getY())/Game.scale);
 		}
 				
 				
