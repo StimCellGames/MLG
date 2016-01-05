@@ -3,6 +3,7 @@ package com.mygdx.game.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.mygdx.game.level.ObjectType.ObjType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
@@ -14,7 +15,7 @@ public class Physics {
 
 	public static Vector2[] explosion(World world, final float x, final float y) {
 
-		int numRays = 64;
+		int numRays = 360;
 		final float blastPower = 20000f;
 		int blastRadius = 100;
 		Vector2[] vectors = new Vector2[numRays * 2];
@@ -24,7 +25,15 @@ public class Physics {
 
 				@Override
 				public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
-					applyBlastImpulse(fixture.getBody(),new Vector2(x, y),point,blastPower);
+					if(fixture.getBody().getUserData() instanceof ObjType) {
+						if(!fixture.getBody().getUserData().equals(ObjType.unMovable)) {
+							fixture.getBody().setType(BodyType.DynamicBody);
+							applyBlastImpulse(fixture.getBody(),new Vector2(x, y),point,blastPower);
+						}
+					} else {
+						fixture.getBody().setType(BodyType.DynamicBody);
+						applyBlastImpulse(fixture.getBody(),new Vector2(x, y),point,blastPower);
+					}
 					return -1;
 				}
 
@@ -52,16 +61,16 @@ public class Physics {
 			return;
 
 		}
-		
+
 		float invDistance = 1 / distance;
 		float impulseMag = blastPower * invDistance * invDistance;
 		impulseMag = Math.min( impulseMag, 500);
 		body.applyLinearImpulse( new Vector2(impulseMag * blastDir.x , impulseMag * blastDir.y ),
-				   applyPoint ,true);
-	
-		
-		
-		
+				applyPoint ,true);
+
+
+
+
 	}
 
 }

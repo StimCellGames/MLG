@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
+import com.mygdx.game.level.ObjectType.ObjType;
 import com.mygdx.game.physics.Physics;
 
 //using Tiled map editor
@@ -45,6 +46,7 @@ public class Level {
 		sr = new ShapeRenderer();
 		GameObject floor = new GameObject(BodyType.StaticBody, world, Gdx.graphics.getWidth() / Game.scale, 1);
 		floor.addBodyDef(0, 0, Gdx.graphics.getWidth() / Game.scale, 0.1f, 4, 4, 0);
+		floor.setType(ObjType.unMovable);
 
 		TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get("Solid");
 
@@ -65,6 +67,7 @@ public class Level {
 						1, 1, 0);
 				object.setX((col * layer.getTileWidth() + layer.getTileWidth() / 2) / Game.scale);
 				object.setY((row * layer.getTileHeight() + layer.getTileWidth() / 2) / Game.scale);
+				object.setType(ObjType.Tile);
 				entities.add(object);
 				// }
 			}
@@ -89,9 +92,7 @@ public class Level {
 		
 		
 		if (Gdx.input.isButtonPressed(0)) {
-			for (int i = 0; i < entities.size(); i++) {
-				entities.get(i).setType(BodyType.DynamicBody);
-			}
+		
 			Physics.explosion(world, Gdx.input.getX()/Game.scale, (Gdx.graphics.getHeight()- Gdx.input.getY())/Game.scale);
 		}
 				

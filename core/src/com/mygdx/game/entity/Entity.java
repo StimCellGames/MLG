@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.level.ObjectType.ObjType;
 
 public abstract class Entity {
 	protected Sprite sprite;
@@ -25,7 +26,7 @@ public abstract class Entity {
 	private World world;
 	protected FixtureDef circleFixture = new FixtureDef();
 	public boolean flaggedForDelete = false;
-
+	
 	public Entity(BodyType type, World world, float width, float height) {
 		this.width = width;
 		this.height = height;
@@ -49,7 +50,6 @@ public abstract class Entity {
 		circleFixture.friction = friction;
 		circleFixture.restitution = restition;
 		body.createFixture(circleFixture);
-
 	}
 
 	public void addBodyDef(float x, float y, float width, float height, float density, float friction,
@@ -102,7 +102,9 @@ public abstract class Entity {
 
 	public abstract void update(OrthographicCamera camera);
 
-	
+	public void setType(ObjType ot) {
+		body.setUserData(ot);
+	}
 	
 	public Body getBody() {
 		return body;

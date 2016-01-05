@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.level.ObjectType.ObjType;
 
 public class Player extends Entity {
 
@@ -19,6 +20,7 @@ public class Player extends Entity {
 		super.addBodyDef(0, -height / 2, width, 1, 1, 0);
 		super.addBodyDef(-(1 / Game.scale), height / 2, width - (2 / Game.scale), height / 2 - (1 / Game.scale), 1, 1,
 				0);
+		setType(ObjType.Player);
 		sprite = new Sprite(new Texture("res/player.png"));
 		body.setFixedRotation(true);
 		setX(100);
