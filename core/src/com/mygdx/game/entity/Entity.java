@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.level.ObjectType.ObjType;
+import com.mygdx.game.level.Classifications.ObjType;
 
 public abstract class Entity {
 	protected Sprite sprite;
@@ -23,15 +23,16 @@ public abstract class Entity {
 	protected float x, y;
 	protected ArrayList<Entity> bodies = new ArrayList<Entity>();
 
-	private World world;
+	protected World world;
 	protected FixtureDef circleFixture = new FixtureDef();
 	public boolean flaggedForDelete = false;
-	
+	public static ArrayList<Entity> entities = new ArrayList<Entity>();
 	public Entity(BodyType type, World world, float width, float height) {
 		this.width = width;
 		this.height = height;
 		this.type = type;
 		this.world = world;
+		entities.add(this);
 
 	}
 
@@ -111,7 +112,7 @@ public abstract class Entity {
 	}
 
 	public void delete() {
-		body.setActive(false);
+		//body.setActive(false);
 		flaggedForDelete = true;
 	}
 
@@ -151,6 +152,7 @@ public abstract class Entity {
 	}
 
 	public float getX() {
+		x=body.getPosition().x;
 		return x;
 	}
 	
@@ -173,6 +175,7 @@ public abstract class Entity {
 	}
 
 	public float getY() {
+		y=body.getPosition().y;
 		return y;
 	}
 

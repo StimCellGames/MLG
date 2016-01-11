@@ -13,7 +13,7 @@ public class Game extends ApplicationAdapter {
 	
 	
 	private Play play;
-	public static final float scale = 5;
+	public static final float scale = 25;
 	
 	private OrthographicCamera camera;
 	private float width, height;
