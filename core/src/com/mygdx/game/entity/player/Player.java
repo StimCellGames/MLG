@@ -78,7 +78,7 @@ public class Player extends Entity {
 			else obj.setX(this.x- 1f);
 			obj.setY(this.y);
 
-			Vector2 dir = new Vector2((x-this.x)*10,(y-this.y)*10);
+			Vector2 dir = new Vector2((x-this.x)*5,(y-this.y)*5);
 			obj.getBody().setLinearVelocity(dir);
 
 		}

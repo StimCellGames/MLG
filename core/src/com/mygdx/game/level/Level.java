@@ -112,7 +112,7 @@ public class Level {
 			float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) / Game.scale + camera.position.y
 					- (Gdx.graphics.getHeight() / 2) / Game.scale;
 
-			Physics.explosion(world, 0.1f, x, y);
+			Physics.explosion(world, -0.1f, x, y);
 
 		}
 
@@ -120,39 +120,15 @@ public class Level {
 			float x = (Gdx.input.getX()) / Game.scale + camera.position.x - (Gdx.graphics.getWidth() / 2) / Game.scale;
 			float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) / Game.scale + camera.position.y
 					- (Gdx.graphics.getHeight() / 2) / Game.scale;
-
 			implosions.add(new Vector2(x, y));
 		}
 
 		for (Vector2 vec2 : implosions) {
-			Physics.implosion(world, 0.2f, vec2.x, vec2.y);
+			Physics.explosion(world, -1f, vec2.x, vec2.y);
 
 		}
 
-		/*
-		 * int maxVel = 100-(int) Math.abs((((Gdx.input.getX() / Game.scale))) -
-		 * (entities.get(i).getBody().getPosition().x));
-		 * 
-		 * System.out.println(maxVel); if(maxVel >0) { if (((Gdx.input.getX() /
-		 * Game.scale - entities.get(i).getX()) / Game.scale) < 0) {
-		 * entities.get(i).getBody().applyLinearImpulse(new Vector2(100, 0), new
-		 * Vector2(Gdx.input.getX() / Game.scale, ((Gdx.graphics.getHeight() -
-		 * Gdx.input.getY()) / Game.scale)), true); } else
-		 * entities.get(i).getBody().applyLinearImpulse(new Vector2(-100, 0),
-		 * new Vector2(Gdx.input.getX() / Game.scale, ((Gdx.graphics.getHeight()
-		 * - Gdx.input.getY()) / Game.scale)), true);
-		 * 
-		 * if (((((Gdx.graphics.getHeight() - Gdx.input.getY()) / Game.scale) -
-		 * entities.get(i).getY())) / Game.scale < 0) {
-		 * entities.get(i).getBody().applyLinearImpulse(new Vector2(0, 100), new
-		 * Vector2(Gdx.input.getX() / Game.scale, (((Gdx.graphics.getHeight() -
-		 * Gdx.input.getY())) / Game.scale)), true); } else
-		 * entities.get(i).getBody().applyLinearImpulse(new Vector2(0, -100),
-		 * new Vector2(Gdx.input.getX() / Game.scale,
-		 * (((Gdx.graphics.getHeight() - Gdx.input.getY())) / Game.scale)),
-		 * true); }
-		 */
-
+		confirmed.update(camera);
 	}
 
 	public TiledMap getTiledMap() {

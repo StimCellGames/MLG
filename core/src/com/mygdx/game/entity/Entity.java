@@ -112,7 +112,6 @@ public abstract class Entity {
 	}
 
 	public void delete() {
-		//body.setActive(false);
 		flaggedForDelete = true;
 	}
 

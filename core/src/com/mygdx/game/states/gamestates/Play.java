@@ -70,7 +70,7 @@ public class Play extends State {
 
 		logger.log();
 
-		world.step(1/60f, 18, 2);
+		world.step(1/60f, 6,2);
 
 		for(int i = 0;i < Entity.entities.size();i++) {
 			if(Entity.entities.get(i).flaggedForDelete) {
