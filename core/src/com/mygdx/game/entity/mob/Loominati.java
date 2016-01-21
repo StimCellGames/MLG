@@ -16,7 +16,8 @@ public class Loominati extends Mob {
 		super(BodyType.DynamicBody, world, 32 / Game.scale, 32 / Game.scale, MobType.Dick);
 		totalHealth = 100;
 		health = 100;
-		addBodyDef(new float[] { 0, height, -height, -width, width, -height }, 0.1f, 1, 0);
+		//addBodyDef(new float[] { 0, height, -height, -width, width, -height }, 0.7f, 1, 0);
+		addBodyDef(0,0,width,height,0.7f,1,0);
 		body.setUserData(this);
 
 		sprite = new Sprite(new Texture("res/loominati.png"));

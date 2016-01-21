@@ -16,17 +16,21 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Game;
 import com.mygdx.game.entity.Entity;
 import com.mygdx.game.entity.GameObject;
-import com.mygdx.game.entity.Missile;
 import com.mygdx.game.entity.mob.Loominati;
+import com.mygdx.game.entity.mob.Mob;
+import com.mygdx.game.entity.projectiles.Missile;
 import com.mygdx.game.level.Classifications.ObjType;
 import com.mygdx.game.physics.Physics;
 
@@ -59,7 +63,7 @@ public class Level {
 		floor.setType(ObjType.unMovable);
 
 		addLayer("Solid", ObjType.Tile);
-		// addLayer("unMovable",ObjType.unMovable);
+		//addLayer("unMovable",ObjType.unMovable);
 
 		confirmed = new Loominati(world);
 
@@ -78,7 +82,7 @@ public class Level {
 					continue;
 				GameObject object = new GameObject(new Sprite(cell.getTile().getTextureRegion()), BodyType.StaticBody,
 						world, tileWidth / 2 / Game.scale, tileHeight / 2 / Game.scale);
-				object.addBodyDef(0, 0, tileWidth / 2 / Game.scale, tileHeight / 2 / Game.scale, 1, 1, 0f);
+				object.addBodyDef(0, 0, tileWidth / 2 / Game.scale, tileHeight / 2 / Game.scale, 1, 1, 0);
 				object.setX((col * tileWidth + tileWidth / 2) / Game.scale);
 				object.setY((row * tileHeight + tileHeight / 2) / Game.scale);
 				object.setType(type);
@@ -88,12 +92,11 @@ public class Level {
 	}
 
 	private static TiledMap loadMap(String path) {
-		return new TmxMapLoader().load("res/map.tmx");
+		return new TmxMapLoader().load(path);
 	}
 
 	public void render(SpriteBatch batch, OrthographicCamera camera) {
 		mapDrawer.setView(camera);
-		// mapDrawer.render();
 		mapDrawer.renderTileLayer((TiledMapTileLayer) map.getLayers().get("stuff"));
 
 		for (int i = 0; i < entities.size(); i++) {
@@ -107,12 +110,12 @@ public class Level {
 
 	public void update(OrthographicCamera camera) {
 
-		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
 			float x = (Gdx.input.getX()) / Game.scale + camera.position.x - (Gdx.graphics.getWidth() / 2) / Game.scale;
 			float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) / Game.scale + camera.position.y
 					- (Gdx.graphics.getHeight() / 2) / Game.scale;
 
-			Physics.explosion(world, -0.1f, x, y);
+			Physics.explosion(world,4, x, y);
 
 		}
 
@@ -130,6 +133,8 @@ public class Level {
 
 		confirmed.update(camera);
 	}
+	
+	
 
 	public TiledMap getTiledMap() {
 		return map;

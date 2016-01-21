@@ -27,6 +27,7 @@ public abstract class Entity {
 	protected FixtureDef circleFixture = new FixtureDef();
 	public boolean flaggedForDelete = false;
 	public static ArrayList<Entity> entities = new ArrayList<Entity>();
+
 	public Entity(BodyType type, World world, float width, float height) {
 		this.width = width;
 		this.height = height;
@@ -96,8 +97,6 @@ public abstract class Entity {
 		body.createFixture(circleFixture);
 
 	}
-	
-	
 
 	public abstract void render(OrthographicCamera camera, SpriteBatch batch);
 
@@ -106,7 +105,7 @@ public abstract class Entity {
 	public void setType(ObjType ot) {
 		body.setUserData(ot);
 	}
-	
+
 	public Body getBody() {
 		return body;
 	}
@@ -123,6 +122,14 @@ public abstract class Entity {
 			on = false;
 		}
 
+	}
+	
+	public boolean testPoint(Vector2 point) {
+		for(int i = 0;i < body.getFixtureList().size;i++) {
+			if(body.getFixtureList().get(i).testPoint(point)) 
+				return true;
+		}
+		return false;
 	}
 
 	public void setActive(boolean a) {
@@ -151,18 +158,10 @@ public abstract class Entity {
 	}
 
 	public float getX() {
-		x=body.getPosition().x;
+		if(body!=null)x = body.getPosition().x;
 		return x;
 	}
-	
-	public void setLinearVelocity(float x,float y) {
-		body.setLinearVelocity(x,y);
-	}
-	
-	public Vector2 getLinearVelocity() {
-		return body.getLinearVelocity();
-	}
-	
+
 	public void setType(BodyType type) {
 		body.setType(type);
 	}
@@ -174,7 +173,7 @@ public abstract class Entity {
 	}
 
 	public float getY() {
-		y=body.getPosition().y;
+		if(body!=null)y = body.getPosition().y;
 		return y;
 	}
 
@@ -186,7 +185,6 @@ public abstract class Entity {
 
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
-
 	}
 
 }
